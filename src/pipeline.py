@@ -1,5 +1,9 @@
 import pandas as pd
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
 
+from features import create_features
 def load_data():
     sales = pd.read_csv("../data/m5-forecasting-accuracy/sales_train_validation.csv", nrows=1000)
     calendar = pd.read_csv("../data/m5-forecasting-accuracy/calendar.csv")
@@ -22,4 +26,7 @@ def clean_data(sales, calendar, prices):
 def run_pipeline():
     sales, calendar, prices = load_data()
     sales, calendar, prices = clean_data(sales, calendar, prices)
-    return sales, calendar, prices
+
+    df = create_features(sales, calendar, prices)  # ✅ NEW STEP
+
+    return df
